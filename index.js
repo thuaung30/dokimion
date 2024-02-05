@@ -8,7 +8,7 @@ app.get("/", (_req, res) => {
 })
 
 app.get("/v2", (_req, res) => {
-  res.send("Dokimion v2 beta beta")
+  res.send("Dokimion v2 beta")
 })
 
 app.listen(port, () => {
