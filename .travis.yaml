@@ -1,0 +1,14 @@
+services:
+  - docker
+
+env:
+  - COMMIT_NO="$TRAVIS_COMMIT"
+
+before_install:
+  - docker build -t "$DOCKER_USERNAME/dokimion:$COMMIT_NO" .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push "$DOCKER_USERNAME/dokimion:$COMMIT_NO"
+
+branches:
+  only:
+    - main
