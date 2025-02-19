@@ -8,9 +8,15 @@ jobs:
   login:
     runs-on: ubuntu-latest
     steps:
-      - name: Get short SHA
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ vars.DOCKERHUB_USERNAME }}/dokimion
+          tags: |
+            type=sha
       -
         name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -25,4 +31,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/dokimion:${{ steps.vars.outputs.sha_short }}
+          tags: ${{ steps.meta.outputs.tags }} 
